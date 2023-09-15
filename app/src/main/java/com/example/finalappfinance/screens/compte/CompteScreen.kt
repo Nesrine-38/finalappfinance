@@ -63,6 +63,10 @@ import com.example.finalappfinance.ui.theme.Pink80
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompteScreen(navController: NavController){
+    val comptes = getComptes()
+    val totalMontant = comptes.sumOf { compte ->
+        compte.Montant_compte.replace(",", "").toDoubleOrNull() ?: 0.0
+    }
     Scaffold(
         topBar={
             CenterAlignedTopAppBar(
@@ -105,30 +109,23 @@ fun CompteScreen(navController: NavController){
                 )
 
             }
-        },
-
-
-        floatingActionButton =
-        {
-            FloatingActionButton(onClick = {}) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-            }
         }
     )
     { paddingValues ->
-        Surface(modifier = Modifier.padding(paddingValues)){
+        Surface(modifier = Modifier.padding(paddingValues)) {
             MainContent(navController = navController)
+        }
         }
 
     }
-}
 
 @Composable
 fun MainContent(
     navController: NavController,
     comptesList: List<Compte> = getComptes())
 {
-    Column (modifier = Modifier.padding(12.dp)) {
+    Column (modifier = Modifier
+        .padding(30.dp)) {
         LazyColumn {
             items(items = comptesList){
                 CompteRow(compte = it) { compte ->

@@ -75,14 +75,6 @@ fun ProfilScreen(navController: NavController){
                 )
 
             }
-        },
-
-
-        floatingActionButton =
-        {
-            FloatingActionButton(onClick = {}) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-            }
         }
     )
     { paddingValues ->

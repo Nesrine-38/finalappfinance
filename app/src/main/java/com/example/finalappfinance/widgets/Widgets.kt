@@ -72,18 +72,17 @@ fun CompteRow(compte: Compte = getComptes()[0], onItemClick: (String) -> Unit = 
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )
-
-                /*Image(painter = rememberImagePainter(data = movie.images[0]),
-                    contentDescription = "Poster")*/
             }
 
             Column(modifier = Modifier.padding(3.dp)) {
                 Text(text = compte.nom_banque,
-                    style = MaterialTheme.typography.headlineSmall)
-                Text(text = "  ${compte.type_compte}",
+                    color=Color.Red,
                     style = MaterialTheme.typography.labelMedium)
-                Text(text = " Montant:${compte.Montant_compte}",
-                    style = MaterialTheme.typography.labelMedium)
+                Text(text = " ${compte.type_compte}",
+                    style = MaterialTheme.typography.labelSmall)
+                Text(text = " Montant:${compte.Montant_compte} €",
+                    color=Color(0xFFE9B005),
+                    style = MaterialTheme.typography.labelSmall)
             }
         }
 

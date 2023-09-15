@@ -93,21 +93,14 @@ fun PaiementScreen(navController: NavController){
     Surface(modifier = Modifier.padding(paddingValues)){
 
         Column (  modifier = Modifier
-            .fillMaxSize()){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 40.dp),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.Start
-
-        )
+            .padding(16.dp))
         {
             Text(text = "Compte de paiement :",
                 fontWeight = FontWeight.Bold)
             Text(text = (getPaiements()[0].nom_compte) ,
                 color = Color.Red
-            )}
+            )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -169,6 +162,7 @@ fun PaiementScreen(navController: NavController){
                 Spacer(Modifier.width(4.dp))
                 Text(text =  (getPaiements()[2].montant_facture))
                 Text(text =  "€")
+
             }
 
             Row(
@@ -194,7 +188,7 @@ fun PaiementScreen(navController: NavController){
 
             Button(
                 onClick = {navController.navigate(FinanceScreens.CompteScreen.name) },
-                border = BorderStroke(1.dp, Color.Blue),
+                border = BorderStroke(1.dp, Color(0xFFE9B005)),
                 shape = RoundedCornerShape(50),
                 modifier = Modifier
                     .fillMaxWidth()

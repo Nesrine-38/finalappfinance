@@ -121,31 +121,12 @@ fun CalendrierScreen(navController: NavController) {
             {
                 AndroidView(factory = { CalendarView(it) }, update = {
                     it.setOnDateChangeListener { calendarView, year, month, day ->
-                        selectedDate = LocalDate.of(year, month + 1, day)
-                        scheduleNotification(context, selectedDate) }
+                        selectedDate = LocalDate.of(year, month + 1, day) }
                 })
             }
     }
 }
 }
-
-fun scheduleNotification(context: Context, date: LocalDate) {
-    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    // Créer une notification
-    val notification = NotificationCompat.Builder(context, "channel_id")
-        .setContentTitle("Rappel de date")
-        .setContentText("Vous avez un événement le $date.")
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .build()
-
-    // Convertir LocalDate en LocalDateTime avec une heure de début de journée (minuit)
-    val startOfDay = date.atStartOfDay()
-    val notificationTime = startOfDay.toEpochSecond(ZoneOffset.UTC) * 1000
-
-    notificationManager.notify(1, notification)
-}
-
 
 
 @Composable
