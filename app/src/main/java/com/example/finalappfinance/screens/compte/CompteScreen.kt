@@ -1,6 +1,7 @@
 package com.example.finalappfinance.screens.compte
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +25,9 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -35,6 +38,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -50,6 +54,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -64,9 +69,10 @@ import com.example.finalappfinance.ui.theme.Pink80
 @Composable
 fun CompteScreen(navController: NavController){
     val comptes = getComptes()
-    val totalMontant = comptes.sumOf { compte ->
-        compte.Montant_compte.replace(",", "").toDoubleOrNull() ?: 0.0
-    }
+    var showDialog by remember { mutableStateOf(false) }
+    var itemName by remember { mutableStateOf("") }
+    var itemDescription by remember { mutableStateOf("") }
+    var itemMontant by remember { mutableStateOf("") }
     Scaffold(
         topBar={
             CenterAlignedTopAppBar(
@@ -115,9 +121,105 @@ fun CompteScreen(navController: NavController){
         Surface(modifier = Modifier.padding(paddingValues)) {
             MainContent(navController = navController)
         }
-        }
+        Column (
+            modifier = Modifier
+                .padding(top = 400.dp)
+        ){
+            Button(
+                onClick = {showDialog = true },
+                border = BorderStroke(1.dp, Color(0xFFE9B005)),
+                shape = RoundedCornerShape(50),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(50.dp),
+                content = { Text("Add", fontWeight = FontWeight.Bold,
+                    color = Color(0xFFE9B005))},
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = Color.Blue,
+                    containerColor = Color.White
+                )
+            )
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    title = {
+                        Text(text = "Ajouter un nouvel élément")
+                    },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = itemName,
+                                onValueChange = {
+                                    itemName = it
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                label = {
+                                    Text("nom banque")
+                                }
+                            )
 
+                            OutlinedTextField(
+                                value = itemDescription,
+                                onValueChange = {
+                                    itemDescription = it
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                label = {
+                                    Text("type compte")
+                                }
+                            )
+
+                            OutlinedTextField(
+                                value = itemMontant,
+                                onValueChange = {
+                                    itemMontant = it
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                label = {
+                                    Text("Montant compte")
+                                }
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(
+                                onClick = {
+                                    // Ajoutez l'élément à votre liste ou effectuez l'action souhaitée
+                                    addItem(itemName, itemDescription,)
+                                    showDialog = false
+                                }
+                            ) {
+                                Text(text = "Ajouter")
+                            }
+
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                }
+                            ) {
+                                Text(text = "Annuler")
+                            }
+                        }
+                    }
+                )
+            }
+        }
     }
+}
+fun addItem(name: String, description: String) {
+
+}
 
 @Composable
 fun MainContent(

@@ -1,6 +1,5 @@
 package com.example.finalappfinance.screens.depenses
 
-import android.service.autofill.OnClickAction
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -29,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,9 +41,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key.Companion.Calendar
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -63,6 +66,7 @@ import com.maxkeppeler.sheets.clock.ClockDialog
 import com.maxkeppeler.sheets.clock.models.ClockConfig
 import com.maxkeppeler.sheets.clock.models.ClockSelection
 import java.time.LocalDate
+import java.util.Calendar
 import java.util.Date
 
 
@@ -71,7 +75,29 @@ import java.util.Date
 fun DepensesScreen(navController: NavController) {
     var commentText by remember { mutableStateOf("") }
     var isIconSelected by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf("") }
+    var isIconSelected1 by remember { mutableStateOf(false) }
+    var isIconSelected2 by remember { mutableStateOf(false) }
+    var isIconSelected3 by remember { mutableStateOf(false) }
+    var isIconSelected4 by remember { mutableStateOf(false) }
+    var isIconSelected5 by remember { mutableStateOf(false) }
+    var isIconSelected6 by remember { mutableStateOf(false) }
+    var isIconSelected7 by remember { mutableStateOf(false) }
+
+    val rainbowColors = listOf(
+        Color.Red,
+        Color.Yellow,
+        Color.Green,
+        Color.Blue,
+        Color(0xff8000 ),
+        Color(0xFF4B0082), // Indigo
+        Color(0xFF9400D3)  // Violet
+    )
+
+    val brush = remember {
+        Brush.linearGradient(
+            colors = rainbowColors
+        )
+    }
     val calendarState = rememberSheetState()
 
 
@@ -203,7 +229,7 @@ fun DepensesScreen(navController: NavController) {
                     Text(
                         text = ("Categories"),
                         fontFamily = FontFamily.Cursive,
-                        fontSize = 30.sp,
+                        fontSize = 20.sp,
                         textAlign = TextAlign.Start,
                         fontWeight = FontWeight.Bold,
                         color = Color.Blue
@@ -234,7 +260,7 @@ fun DepensesScreen(navController: NavController) {
                                 .clickable {
                                     isIconSelected = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected) Color.Gray else Color.Transparent),
                         )
 
                         Icon(
@@ -243,9 +269,9 @@ fun DepensesScreen(navController: NavController) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected1 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected1) Color.Gray else Color.Transparent),
                         )
 
 
@@ -255,9 +281,9 @@ fun DepensesScreen(navController: NavController) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected2 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected2) Color.Gray else Color.Transparent),
                         )
 
 
@@ -268,9 +294,9 @@ fun DepensesScreen(navController: NavController) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected3 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected3) Color.Gray else Color.Transparent),
                         )
 
                     }
@@ -289,9 +315,9 @@ fun DepensesScreen(navController: NavController) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected4 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected4) Color.Gray else Color.Transparent),
                         )
 
                         Icon(
@@ -300,9 +326,9 @@ fun DepensesScreen(navController: NavController) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected5 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected5) Color.Gray else Color.Transparent),
                         )
                         Icon(
                             painter = painterResource(R.mipmap.cat_foreground),
@@ -310,19 +336,19 @@ fun DepensesScreen(navController: NavController) {
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected6 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected6) Color.Gray else Color.Transparent),
                         )
                         Icon(
                             painter = painterResource(R.mipmap.ajouter_foreground),
-                            contentDescription = "courses",
+                            contentDescription = "Add",
                             modifier = Modifier
                                 .size(40.dp)
                                 .clickable {
-                                    isIconSelected = !isIconSelected
+                                    isIconSelected7 = !isIconSelected
                                 }
-                                .background(if (isIconSelected) Color.Green else Color.Transparent),
+                                .background(if (isIconSelected7) Color.Gray else Color.Transparent),
                         )
                     }
 
@@ -360,47 +386,42 @@ fun DepensesScreen(navController: NavController) {
                         modifier = Modifier
                         .padding(horizontal = 20.dp),
                     ) {
-                                Text(
-                                    text = "Commentaire",
-                                    fontFamily = FontFamily.Cursive,
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.Blue
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
-
-                        Icon(
-                            imageVector = Icons.Default.Send,
-                            contentDescription = "Envoyer",
-                            tint = Color.Blue,
+                        Row(
                             modifier = Modifier
-                                .size(24.dp)
-                                .padding(end = 8.dp)
-                                .clickable {
+                                .fillMaxWidth(),
 
-                                }
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            OutlinedTextField(
+                                value = commentText,
+                                onValueChange = { commentText = it },
+                                textStyle = TextStyle(brush = brush),
+                                label = { Text("Commentaire")}
+                            )
+                            Button(
+                                onClick = {
+                                    commentText = "" },
+                                shape = RectangleShape,
+                                        border = BorderStroke(1.dp, Color(0xFFE9B005)),
+                                colors = ButtonDefaults.buttonColors(
+                                    contentColor = Color.Blue,
+                                    containerColor = Color.White),
+                                modifier = Modifier
+                                    .fillMaxWidth()
 
-                        )
-
-                                TextField(
-                                    value = text,
-                                    onValueChange = { newText ->
-                                        text = newText
-                                    },
-                                    label = { Text("Enter text") },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(Color.White),
-
-                                )
+                            ) {
+                                Text(text = "send")
+                            }
                         }
-
                     }
-                }
 
+                }
             }
+        }
     }
 }
+
 
 
 

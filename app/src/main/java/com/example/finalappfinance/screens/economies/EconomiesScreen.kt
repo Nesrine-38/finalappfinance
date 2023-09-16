@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -27,11 +28,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,7 +58,9 @@ import com.example.finalappfinance.ui.theme.Pink80
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EconomiesScreen(navController: NavController){
-
+    var showDialog by remember { mutableStateOf(false) }
+    var itemnom_economies by remember { mutableStateOf("") }
+    var itemsolde_economie by remember { mutableStateOf("") }
     Scaffold(
         topBar={
             CenterAlignedTopAppBar(
@@ -235,9 +243,74 @@ fun EconomiesScreen(navController: NavController){
                         containerColor = Color.White
                     )
                 )
+                    if (showDialog) {
+                        AlertDialog(
+                            onDismissRequest = {
+                                showDialog = false
+                            },
+                            title = {
+                                Text(text = "Ajouter un nouvel élément")
+                            },
+                            text = {
+                                Column {
+                                    OutlinedTextField(
+                                        value = itemnom_economies,
+                                        onValueChange = {
+                                            itemnom_economies = it
+                                        },
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                        label = {
+                                            Text("Nom economies")
+                                        }
+                                    )
+
+                                    OutlinedTextField(
+                                        value = itemsolde_economie,
+                                        onValueChange = {
+                                            itemsolde_economie = it
+                                        },
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                        label = {
+                                            Text("Solde_economie")
+                                        }
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Button(
+                                        onClick = {
+                                            addItem(itemnom_economies, itemsolde_economie,)
+                                            showDialog = false
+                                        }
+                                    ) {
+                                        Text(text = "Ajouter")
+                                    }
+
+                                    Button(
+                                        onClick = {
+                                            showDialog = false
+                                        }
+                                    ) {
+                                        Text(text = "Annuler")
+                                    }
+                                }
+                            }
+                        )
+                    }
             }
         }
     }
+}
+fun addItem(name: String, description: String) {
+
 }
 @Composable
 fun MainContent(navController: NavController)

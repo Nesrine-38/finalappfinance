@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -23,11 +24,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,11 +46,15 @@ import androidx.navigation.NavController
 import com.example.finalappfinance.R
 import com.example.finalappfinance.model.getPaiements
 import com.example.finalappfinance.navigation.FinanceScreens
+import com.example.finalappfinance.screens.economies.addItem
 import com.example.finalappfinance.ui.theme.Pink80
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaiementScreen(navController: NavController){
+    var showDialog by remember { mutableStateOf(false) }
+    var itemnom_facture by remember { mutableStateOf("") }
+    var itemmontant_facture by remember { mutableStateOf("") }
    Scaffold(
         topBar={
             CenterAlignedTopAppBar(
@@ -200,9 +210,76 @@ fun PaiementScreen(navController: NavController){
                     containerColor = Color.White
                 )
             )
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    title = {
+                        Text(text = "Ajouter un nouvel élément")
+                    },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = itemnom_facture,
+                                onValueChange = {
+                                    itemnom_facture = it
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                label = {
+                                    Text("Nom facture")
+                                }
+                            )
+
+                            OutlinedTextField(
+                                value = itemmontant_facture,
+                                onValueChange = {
+                                    itemmontant_facture = it
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                label = {
+                                    Text("montant facture")
+                                }
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Button(
+                                onClick = {
+                                    addItem(itemnom_facture, itemmontant_facture,)
+                                    showDialog = false
+                                }
+                            ) {
+                                Text(text = "Ajouter")
+                            }
+
+                            Button(
+                                onClick = {
+                                    showDialog = false
+                                }
+                            ) {
+                                Text(text = "Annuler")
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
 }
+}
+
+fun addItem(name: String, description: String) {
+
 }
 @Composable
 fun MainContent(navController: NavController)
